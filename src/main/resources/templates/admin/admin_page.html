@@ -29,9 +29,9 @@
         <div class="row">
             <div class="p-0 col-2">
                 <div class="nav flex-column nav-pills pt-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" href="/admin" sec:authorize="hasAuthority('ADMIN')" role="tab"
+                    <a class="nav-link active" href="/admin/" sec:authorize="hasAuthority('ADMIN')" role="tab"
                        aria-controls="v-pills-home" aria-selected="true">Admin</a>
-                    <a class="nav-link" href="/user" sec:authorize="(hasAnyAuthority('ADMIN', 'USER'))"
+                    <a class="nav-link" href="/user/" sec:authorize="(hasAnyAuthority('ADMIN', 'USER'))"
                        role="tab"
                        aria-controls="v-pills-profile" aria-selected="false">User</a>
                 </div>
@@ -92,39 +92,39 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
                                                     </div>
-                                                    <form th:action="@{/edit/{id}(id=${user.id})}"
+                                                    <form th:action="@{/admin/edit/{id}(id=${user.id})}"
                                                           th:object="${user}" th:method="PATCH">
                                                         <div class="modal-body col-md text-center">
                                                             <br>
                                                             <label for="name0"><b>Name</b></label>
                                                             <input th:name="name" th:type="text"
                                                                    class="form-control" id="name0"
-                                                                   th:value="${user.name}"/>
+                                                                   th:value="*{name}"/>
                                                             <br>
                                                             <label for="surname0"><b>Surname</b></label>
                                                             <input th:name="surname" th:type="text"
                                                                    class="form-control" id="surname0"
-                                                                   th:value="${user.surname}"/>
+                                                                   th:value="*{surname}"/>
                                                             <br>
                                                             <label for="age0"><b>Age</b></label>
                                                             <input th:name="age" th:type="number"
                                                                    class="form-control" id="age0"
-                                                                   th:value="${user.age}"/>
+                                                                   th:value="*{age}"/>
                                                             <br>
                                                             <label for="email0"><b>Email</b></label>
                                                             <input th:name="email" th:type="text"
                                                                    class="form-control" id="email0"
-                                                                   th:value="${user.email}"/>
+                                                                   th:value="*{email}"/>
                                                             <br>
                                                             <label for="login0"><b>Login</b></label>
                                                             <input th:name="login" th:type="text"
                                                                    class="form-control" id="login0"
-                                                                   th:value="${user.login}"/>
+                                                                   th:value="*{login}"/>
                                                             <br>
                                                             <label for="password0"><b>Password</b></label>
                                                             <input th:name="password" type="text"
                                                                    class="form-control" id="password0"
-                                                                   th:value="${user.password}"/>
+                                                                   th:value="*{password}"/>
                                                             <br>
                                                             <label for="roles"><b>Role</b></label>
                                                             <select multiple class="form-control form-control-sm" id="roles" name="roles" size="2" required>
@@ -159,7 +159,7 @@
                                                                 aria-label="Close"></button>
                                                     </div>
                                                     <form class="modal-body col-md text-center"
-                                                          th:action="@{/{id}(id=${user.id})}"
+                                                          th:action="@{/admin/{id}(id=${user.id})}"
                                                           th:method="DELETE">
                                                         <div class="modal-body col-md">
                                                             <label for="id"><b>ID</b></label>

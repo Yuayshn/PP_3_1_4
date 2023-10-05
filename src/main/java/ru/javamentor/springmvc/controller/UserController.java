@@ -8,7 +8,7 @@ import ru.javamentor.springmvc.model.User;
 
 
 @Controller
-@RequestMapping
+@RequestMapping("/user")
 public class UserController {
 
     @GetMapping(value = "/login")

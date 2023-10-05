@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
-                .loginPage("/login")
+                .loginPage("/user/login")
                 .successHandler(successUserHandler)
                 .loginProcessingUrl("/login")
                 .usernameParameter("j_login")
@@ -43,12 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout()
                 .permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/user/login?logout")
                 .and().csrf().disable();
 
         http
                 .authorizeRequests()
-                .antMatchers("/login").anonymous()
+                .antMatchers("/user/login").anonymous()
                 .antMatchers("/admin/**").access("hasAnyAuthority('ADMIN')")
                 .antMatchers("/user/**").access("hasAnyAuthority('ADMIN', 'USER')")
                 .anyRequest().authenticated();

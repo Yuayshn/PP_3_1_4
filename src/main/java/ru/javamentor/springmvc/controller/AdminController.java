@@ -9,6 +9,8 @@ import ru.javamentor.springmvc.model.User;
 import ru.javamentor.springmvc.service.RoleService;
 import ru.javamentor.springmvc.service.UserService;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -37,22 +39,29 @@ public class AdminController {
         return "admin/new_user";
     }
 
-    @PostMapping("/add")
-    public String add(@ModelAttribute("user") User user, ModelMap modelMap) {
-            modelMap.addAttribute("user", user);
-            modelMap.addAttribute("roles", roleService.getAllRoles());
-            userService.saveUser(user);
-            return "redirect:/admin/";
+    @PostMapping("/new")
+    public String add(@ModelAttribute("user") User user) {
+        getUserRoles(user);
+        userService.saveUser(user);
+        return "redirect:/admin/";
     }
     @PatchMapping("/edit/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
-            userService.updateUser(user);
-            return "redirect:/admin/";
+    public String update(@ModelAttribute("user") User user, ModelMap modelMap) {
+        modelMap.addAttribute("roles", roleService.getAllRoles());
+        getUserRoles(user);
+        userService.updateUser(user);
+        return "redirect:/admin/";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin/";
+    }
+
+    private void getUserRoles(User user) {
+        user.setRoles(user.getRoles().stream()
+                .map(role -> roleService.getRole(role.getUserRole()))
+                .collect(Collectors.toSet()));
     }
 }

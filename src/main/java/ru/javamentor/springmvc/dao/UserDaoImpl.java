@@ -1,13 +1,14 @@
 package ru.javamentor.springmvc.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javamentor.springmvc.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
@@ -25,8 +26,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(long id) {
-        User someUser = entityManager.find(User.class, id);
-        entityManager.remove(someUser);
+        entityManager.remove(entityManager.find(User.class, id));
     }
 
     @Override

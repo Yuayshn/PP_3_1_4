@@ -1,13 +1,14 @@
 package ru.javamentor.springmvc.dao;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javamentor.springmvc.model.Role;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext

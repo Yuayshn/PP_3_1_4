@@ -29,9 +29,7 @@
         <div class="row">
             <div class="p-0 col-2">
                 <div class="nav flex-column nav-pills pt-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" href="/admin" sec:authorize="hasAuthority('ADMIN')" role="tab"
-                       aria-controls="v-pills-home" aria-selected="true">Admin</a>
-                    <a class="nav-link" href="/user" sec:authorize="(hasAnyAuthority('ADMIN', 'USER'))"
+                    <a class="nav-link active" href="/user/" sec:authorize="(hasAnyAuthority('ADMIN', 'USER'))"
                        role="tab"
                        aria-controls="v-pills-profile" aria-selected="false">User</a>
                 </div>
@@ -57,14 +55,14 @@
                                             <th>Login</th>
                                             <th>Role</th>
                                         </tr>
-                                        <tr th:each="user : ${users}">
-                                            <td th:text="${user.id}">id</td>
-                                            <td th:text="${user.name}">name</td>
-                                            <td th:text="${user.surname}">surname</td>
-                                            <td th:text="${user.age}">age</td>
-                                            <td th:text="${user.email}">email</td>
-                                            <td th:text="${user.login}">login</td>
-                                            <td th:text="${user.roles}">roles</td>
+                                        <tr th:each="user : ${user}">
+                                            <td th:text="${user.getId()}">id</td>
+                                            <td th:text="${user.getName()}">name</td>
+                                            <td th:text="${user.getSurname()}">surname</td>
+                                            <td th:text="${user.getAge()}">age</td>
+                                            <td th:text="${user.getEmail()}">email</td>
+                                            <td th:text="${user.getLogin()}">login</td>
+                                            <td th:text="${user.getRoles()}">roles</td>
                                         </tr>
                                     </table>
                                 </div>
