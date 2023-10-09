@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javamentor.springmvc.dao.UserDao;
 import ru.javamentor.springmvc.model.User;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @Transactional
-    public void updateUser(User user) {
+    public void updateUser(@Valid User user) {
         if (!user.getPassword().equals(userDao.getUserById(user.getId()).getPassword())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }

@@ -6,8 +6,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,21 +21,32 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Name should be between 2 and 25 latin characters")
+    @Size(min = 2, max = 25)
     private String name;
 
     @Column(name = "surname")
+    @NotEmpty(message = "Surname should be between 2 and 25 latin characters")
+    @Size(min = 2, max = 25)
     private String surname;
 
     @Column(name = "age")
+    @Min(value = 0, message = "Age should be >= 0")
+    @Max(value = 127, message = "Age should be < 128")
     private int age;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     @Column(name = "login")
+    @NotEmpty(message = "Login should be between 2 and 25 latin characters")
+    @Size(min = 2, max = 25)
     private String login;
 
     @Column(name = "password")
+    @NotEmpty(message = "Password should be between 4 and 25 characters")
+    @Size(min = 3)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -159,5 +172,22 @@ public class User implements UserDetails {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 17;
+
+        hash = 31 * hash + (name == null ? 0 : name.hashCode());
+        hash = 31 * hash + (login == null ? 0 : login.hashCode());
+        hash = (int) (31 * hash + id);
+        return hash;
     }
 }

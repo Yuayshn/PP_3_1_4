@@ -2,12 +2,13 @@ package ru.javamentor.springmvc.service;
 
 
 import ru.javamentor.springmvc.model.User;
+import javax.validation.Valid;
 import java.util.List;
 
 public interface UserService {
     void saveUser(User user);
 
-    void updateUser(User user);
+    void updateUser(@Valid User user);
 
     void deleteUser(long id);
 

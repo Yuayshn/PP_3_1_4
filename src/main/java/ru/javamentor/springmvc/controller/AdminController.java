@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javamentor.springmvc.model.User;
 import ru.javamentor.springmvc.service.RoleService;
 import ru.javamentor.springmvc.service.UserService;
-
+import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Controller
@@ -40,17 +41,25 @@ public class AdminController {
     }
 
     @PostMapping("/new")
-    public String add(@ModelAttribute("user") User user) {
-        getUserRoles(user);
-        userService.saveUser(user);
-        return "redirect:/admin/";
+    public String add(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "admin/new_user";
+        } else {
+            getUserRoles(user);
+            userService.saveUser(user);
+            return "redirect:/admin/";
+        }
     }
     @PatchMapping("/edit/{id}")
-    public String update(@ModelAttribute("user") User user, ModelMap modelMap) {
-        modelMap.addAttribute("roles", roleService.getAllRoles());
-        getUserRoles(user);
-        userService.updateUser(user);
-        return "redirect:/admin/";
+    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, ModelMap modelMap) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/admin/";
+        } else {
+            modelMap.addAttribute("roles", roleService.getAllRoles());
+            getUserRoles(user);
+            userService.updateUser(user);
+            return "redirect:/admin/";
+        }
     }
 
     @DeleteMapping("/{id}")
