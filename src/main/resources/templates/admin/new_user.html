@@ -78,13 +78,9 @@
                                        id="password"/>
                                 <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" >password error</div>
                                 <br>
-                                <label for="roles"><b>Role</b></label>
-                                <select multiple class="form-control form-control-sm" id="roles" name="roles" size="2" required>
-                                    <option th:each="role: ${roles}" th:value="${role.userRole}" th:selected="${user.roles.contains(role)}">
-                                        <th:block th:text="${role.userRole}">
-                                        </th:block>
-                                    </option>
-                                </select>
+                                <label for="roles"><b>Add role (Press to ADMIN - admin and USER - user)</b></label>
+                                <input th:name="roles" th:type="text" th:field="*{roles}" class="form-control" id="roles"/>
+                                <div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}" >role error</div>
                                 <br>
                                 <button th:type="submit" class="btn btn-success btn-lg" value="Add new user">Add new user
                                 </button>
